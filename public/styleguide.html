@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Tiệm · Styleguide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .sg { max-width: 1120px; margin: 0 auto; padding: 40px 32px 80px; }
+    .sg-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .sg-top .brand { padding: 0; }
+    .sg section { padding: 40px 0; border-bottom: 1px solid var(--line); }
+    .sg h2.sg-title { font-size: var(--fs-2xl); margin: 0 0 4px; }
+    .sg .sg-desc { color: var(--muted); font-size: var(--fs-sm); margin: 0 0 24px; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    .sw { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
+    .sw i { display: block; height: 64px; }
+    .sw div { padding: 10px 12px; font-size: var(--fs-xs); }
+    .sw b { display: block; font-size: var(--fs-sm); }
+    .sw code { color: var(--muted); }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .type-row { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: baseline; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+    .type-row code { color: var(--muted); font-size: var(--fs-xs); }
+    .display { font-family: var(--font-display); }
+    .demo-cal { position: relative; height: 140px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .demo-cal .booking { position: relative; left: 0; right: 0; height: 100%; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .fake-dialog { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-lg); max-width: 520px; }
+    .fake-dialog #form { padding-top: 0; }
+    .fake-dialog .dialoghead { position: static; }
+    @media (max-width: 700px) { .sg { padding: 24px 16px 60px; } .grid-2 { grid-template-columns: 1fr; } .demo-cal { grid-template-columns: 1fr 1fr; height: 300px; } }
+  </style>
+</head>
+<body>
+  <div class="sg">
+    <div class="sg-top">
+      <div>
+        <span class="brand">tiệm<span class="dot">.</span></span>
+        <div class="eyebrow" style="margin-top:10px">Design system · Monochrome</div>
+      </div>
+      <button class="secondary" id="sgTheme" type="button">Đổi sáng / tối</button>
+    </div>
+
+    <section>
+      <h2 class="sg-title">Màu thương hiệu</h2>
+      <p class="sg-desc">Đen là màu thương hiệu và dùng cho hành động chính. Phân cấp bằng độ đậm chữ, viền mảnh và khoảng trắng — không dùng màu trang trí.</p>
+      <div class="swatches" id="brandSwatches"></div>
+    </section>
+
+    <section>
+      <h2 class="sg-title">Nền, chữ &amp; viền</h2>
+      <p class="sg-desc">Chữ <code>--muted</code> đạt tương phản AA trên mọi nền.</p>
+      <div class="swatches" id="neutralSwatches"></div>
+    </section>
+
+    <section>
+      <h2 class="sg-title">Màu trạng thái</h2>
+      <p class="sg-desc">Luôn kèm chữ hoặc chấm màu, không chỉ dựa vào màu.</p>
+      <div class="row">
+        <span class="chip chip-info">Đã xác nhận</span>
+        <span class="chip chip-primary">Đang làm</span>
+        <span class="chip chip-warning">Chờ xác nhận</span>
+        <span class="chip chip-success">Hoàn thành</span>
+        <span class="chip chip-danger">Đã hủy</span>
+        <span class="chip">Không đến</span>
+      </div>
+      <div class="demo-cal" style="margin-top:20px">
+        <div class="booking confirmed"><small>10:00 – 12:00</small><strong>Ngọc Phạm</strong><small>Đắp gel</small><div class="status">● Đã xác nhận</div></div>
+        <div class="booking doing"><small>09:30 – 11:00</small><strong>Linh Trần</strong><small>Nối mi</small><div class="status">● Đang làm</div></div>
+        <div class="booking wait"><small>14:00 – 15:00</small><strong>Thảo Võ</strong><small>Sơn gel</small><div class="status">● Chờ xác nhận</div></div>
+        <div class="booking done"><small>09:00 – 10:00</small><strong>Hà Nguyễn</strong><small>Sơn gel</small><div class="status">● Hoàn thành</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="sg-title">Typography</h2>
+      <p class="sg-desc"><b>Be Vietnam Pro</b> cho toàn bộ giao diện, kể cả tiêu đề và logo.</p>
+      <div class="type-row"><code>Display 48</code><span class="display" style="font-size:48px;font-weight:600;line-height:1.15">Chăm khách trọn vẹn.</span></div>
+      <div class="type-row"><code>Display 30</code><span class="display" style="font-size:30px;font-weight:600">Quản lý <span style="color:var(--muted)">nhẹ tênh.</span></span></div>
+      <div class="type-row"><code>H1 app 30/700</code><span style="font-size:30px;font-weight:700;letter-spacing:-.02em">Lịch hẹn</span></div>
+      <div class="type-row"><code>H2 16/600</code><span style="font-size:16px;font-weight:600">Lịch toàn tiệm</span></div>
+      <div class="type-row"><code>Body 14/400</code><span>Sắp xếp lịch gọn gàng, chăm sóc từng khách hàng. Ứng dụng hiển thị đầy đủ dấu tiếng Việt: ắ ằ ẳ ẵ ặ ấ ầ ẩ ẫ ậ ế ề ể ễ ệ ố ồ ổ ỗ ộ ớ ờ ở ỡ ợ ứ ừ ử ữ ự.</span></div>
+      <div class="type-row"><code>Small 12</code><span style="font-size:12px;color:var(--muted)">Giao dịch mô phỏng · Trừ hoàn tiền</span></div>
+      <div class="type-row"><code>Label 11 caps</code><span class="eyebrow">Mộc Nail &amp; Lash · Chi nhánh chính</span></div>
+      <div class="type-row"><code>Số liệu</code><span style="font-size:28px;font-weight:700;font-variant-numeric:tabular-nums">3.700.000đ</span></div>
+    </section>
+
+    <section>
+      <h2 class="sg-title">Nút bấm</h2>
+      <p class="sg-desc">Mỗi màn hình chỉ có một nút primary nổi bật.</p>
+      <div class="row">
+        <button class="primary">＋ Đặt lịch mới</button>
+        <button class="secondary">Đổi lịch</button>
+        <button class="primary small">Thu tiền</button>
+        <button class="secondary small">Hủy lịch</button>
+        <button class="primary" disabled>Đang lưu…</button>
+      </div>
+      <div class="chips"><button>14:30 · Ngọc Lan</button><button>15:00 · Thu Mai</button></div>
+    </section>
+
+    <section>
+      <h2 class="sg-title">Thống kê &amp; bảng</h2>
+      <div class="stats">
+        <div class="stat"><span>Lịch hẹn trong ngày</span><strong>7</strong><small>0 không đến · 0 đã hủy</small></div>
+        <div class="stat"><span>Tiền mặt thực thu</span><strong>250.000đ</strong><small>Thu trừ hoàn tiền</small></div>
+        <div class="stat"><span>Banking thực nhận</span><strong>180.000đ</strong><small>Giao dịch mô phỏng</small></div>
+        <div class="stat"><span>Tổng thu ròng</span><strong>430.000đ</strong><small>Chưa trừ chi phí</small></div>
+      </div>
+      <div class="panel">
+        <div class="toolbar"><h2>Phiếu thanh toán</h2><select><option>Tất cả phương thức</option></select><input type="date"></div>
+        <div class="tablewrap"><table>
+          <thead><tr><th>Khách hàng / mã phiếu</th><th>Dịch vụ</th><th>Nhân viên</th><th>Số tiền</th><th>Trạng thái</th><th></th></tr></thead>
+          <tbody>
+            <tr><td data-label="">Hà Nguyễn<small style="display:block">DV00125 · 09:00</small></td><td data-label="Dịch vụ">Sơn gel</td><td data-label="Nhân viên">Ngọc Lan</td><td data-label="Số tiền">250.000đ</td><td data-label="Trạng thái"><span class="chip chip-success">Đã thu đủ · Tiền mặt</span></td><td data-label=""><button>Chi tiết →</button></td></tr>
+            <tr><td data-label="">Linh Trần<small style="display:block">DV00126 · 09:30</small></td><td data-label="Dịch vụ">Nối mi</td><td data-label="Nhân viên">Minh Anh</td><td data-label="Số tiền">350.000đ</td><td data-label="Trạng thái"><span class="chip chip-primary">Đang làm</span></td><td data-label=""><button>Chi tiết →</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="sg-title">Form &amp; dialog</h2>
+      <div class="grid-2">
+        <div class="fake-dialog">
+          <form id="form" onsubmit="return false">
+            <div class="dialoghead"><h2>Đặt lịch mới</h2><button type="button" class="icon-btn" aria-label="Đóng">✕</button></div>
+            <div id="fields">
+              <label>Tên khách hàng<input placeholder="Ví dụ: Chị Hà"></label>
+              <label>Dịch vụ<select><option>Sơn gel · 60 phút · 250.000đ</option></select></label>
+              <label><input type="checkbox" checked> Đã thu đủ tiền mặt</label>
+              <p class="viewnote">Chưa kết nối ngân hàng. Đây là mô phỏng xác nhận giao dịch.</p>
+            </div>
+            <p class="error">Khung giờ bị trùng hoặc ngoài ca 09:00–19:00. Hãy chọn giờ khác.</p>
+            <div id="actions"><button class="primary">Xác nhận đặt lịch</button><button class="secondary" type="button">Hủy</button></div>
+          </form>
+        </div>
+        <div>
+          <div class="detailrow"><span>Khách hàng</span><strong>Hà Nguyễn</strong></div>
+          <div class="detailrow"><span>Trạng thái</span><strong><span class="chip chip-success">Hoàn thành</span></strong></div>
+          <div class="detailrow"><span>Tổng dịch vụ</span><strong>250.000đ</strong></div>
+          <div class="money">Đã thu đủ tiền</div>
+          <div class="success"><div>✓</div><h3>Thanh toán đủ tiền</h3><div class="money">250.000đ</div><p>Tiền mặt</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const brand = [['Primary', '--primary'], ['Primary hover', '--primary-hover'], ['Primary soft', '--primary-soft'], ['Ink', '--ink'], ['Muted', '--muted'], ['Line', '--line']];
+    const neutral = [['Nền', '--bg'], ['Nền phụ', '--bg-subtle'], ['Bề mặt', '--surface'], ['Chữ', '--ink'], ['Chữ phụ', '--muted'], ['Viền', '--line']];
+    const paint = (id, list) => {
+      const css = getComputedStyle(document.documentElement);
+      document.getElementById(id).innerHTML = list.map(([n, v]) => `<div class="sw"><i style="background:var(${v})"></i><div><b>${n}</b><code>${v} · ${css.getPropertyValue(v).trim()}</code></div></div>`).join('');
+    };
+    const repaint = () => { paint('brandSwatches', brand); paint('neutralSwatches', neutral); };
+    document.documentElement.dataset.theme = localStorage.getItem('tiem-theme') === 'dark' ? 'dark' : 'light';
+    repaint();
+    document.getElementById('sgTheme').onclick = () => {
+      document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      repaint();
+    };
+  </script>
+</body>
+</html>

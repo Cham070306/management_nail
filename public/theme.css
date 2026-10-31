@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Tiệm — Design tokens (Monochrome: đen · trắng · xám)
+   Dùng chung cho trang chủ (home.css), app quản lý (style.css) và styleguide.
+   Chỉ sửa màu / font / bo góc tại file này.
+   Màu duy nhất ngoài thang xám là màu trạng thái (đã làm dịu) cho chip nghiệp vụ.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Nền & bề mặt ---- */
+  --bg: #fafafa;
+  --bg-subtle: #f4f4f5;
+  --surface: #ffffff;
+  --surface-2: #f7f7f7;
+  --overlay: rgba(10, 10, 10, 0.45);
+
+  /* ---- Chữ ---- */
+  --ink: #0a0a0a;
+  --ink-2: #262626;
+  --muted: #525252;
+  --faint: #6b6b6b;
+
+  /* ---- Viền ---- */
+  --line: #e5e5e5;
+  --line-strong: #d4d4d4;
+
+  /* ---- Thương hiệu: đen ---- */
+  --primary: #0a0a0a;
+  --primary-hover: #2b2b2b;
+  --primary-soft: #f0f0f0;
+  --primary-softer: #f7f7f7;
+  --work-bg: #e9e9e9; --work-ink: #171717;
+  --primary-ink: #0a0a0a;
+  --on-primary: #ffffff;
+  --primary-deep: #0a0a0a;
+
+  --accent: #404040;
+  --accent-soft: #f2f2f2;
+  --accent-ink: #262626;
+
+  /* ---- Màu ngữ nghĩa (dịu): nền / viền / chữ ---- */
+  --success-bg: #eef5f0; --success: #4d8a65; --success-ink: #2f5e42;
+  --info-bg: #f0f0f0;    --info: #6b6b6b;    --info-ink: #333333;
+  --warning-bg: #f8f3e8; --warning: #a8843f; --warning-ink: #6b5222;
+  --danger-bg: #f9eeed;  --danger: #b5544c;  --danger-ink: #8a332c;
+  --neutral-bg: #f2f2f2; --neutral: #a3a3a3; --neutral-ink: #525252;
+
+  /* ---- Avatar nhân viên (các sắc xám) ---- */
+  --av-1-bg: #0a0a0a; --av-1: #ffffff;
+  --av-2-bg: #e5e5e5; --av-2: #171717;
+  --av-3-bg: #525252; --av-3: #ffffff;
+  --av-4-bg: #f4f4f5; --av-4: #404040;
+
+  /* ---- Typography ---- */
+  --font-body: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --fs-2xs: 11px;  /* chỉ dùng cho nhãn IN HOA có giãn chữ */
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 15px;
+  --fs-lg: 16px;
+  --fs-xl: 18px;
+  --fs-2xl: 20px;
+  --fs-3xl: 24px;
+  --fs-4xl: 30px;
+  --fs-5xl: 38px;
+  --fs-6xl: 48px;
+
+  /* ---- Spacing (thang 4px) ---- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px; --sp-5: 20px;
+  --sp-6: 24px; --sp-7: 32px; --sp-8: 40px; --sp-9: 56px; --sp-10: 80px;
+
+  /* ---- Bo góc (vừa phải, không bo tròn quá) ---- */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-full: 999px;
+
+  /* ---- Đổ bóng (trung tính, rất nhẹ) ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px -4px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px -12px rgba(0, 0, 0, 0.14);
+  --ring: 0 0 0 3px rgba(10, 10, 10, 0.18);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* ---- Alias tương thích tên biến cũ ---- */
+  --card: var(--surface);
+  --text: var(--ink);
+  --green: var(--primary);
+  --soft: var(--primary-soft);
+  --pale: var(--primary-soft);
+  --warm: var(--accent-soft);
+  --blue: var(--info-bg);
+  --purple: var(--primary-soft);
+  --amber: var(--warning-bg);
+  --shadow: var(--shadow-lg);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0a0a0a;
+  --bg-subtle: #111111;
+  --surface: #141414;
+  --surface-2: #1a1a1a;
+  --overlay: rgba(0, 0, 0, 0.65);
+
+  --ink: #fafafa;
+  --ink-2: #e5e5e5;
+  --muted: #a3a3a3;
+  --faint: #8f8f8f;
+
+  --line: #262626;
+  --line-strong: #3d3d3d;
+
+  --primary: #fafafa;
+  --primary-hover: #e0e0e0;
+  --primary-soft: #222222;
+  --primary-softer: #1a1a1a;
+  --work-bg: #2a2a2a; --work-ink: #f5f5f5;
+  --primary-ink: #fafafa;
+  --on-primary: #0a0a0a;
+  --primary-deep: #000000;
+
+  --accent: #d4d4d4;
+  --accent-soft: #1f1f1f;
+  --accent-ink: #e5e5e5;
+
+  --success-bg: #16231b; --success: #6fae87; --success-ink: #a8d4b8;
+  --info-bg: #1f1f1f;    --info: #a3a3a3;    --info-ink: #d4d4d4;
+  --warning-bg: #2a2416; --warning: #c9a35a; --warning-ink: #e6d09e;
+  --danger-bg: #2c1817;  --danger: #d27a72;  --danger-ink: #efb4ae;
+  --neutral-bg: #1f1f1f; --neutral: #737373; --neutral-ink: #c4c4c4;
+
+  --av-1-bg: #fafafa; --av-1: #0a0a0a;
+  --av-2-bg: #333333; --av-2: #fafafa;
+  --av-3-bg: #a3a3a3; --av-3: #0a0a0a;
+  --av-4-bg: #1f1f1f; --av-4: #d4d4d4;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -4px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 32px -12px rgba(0, 0, 0, 0.8);
+  --ring: 0 0 0 3px rgba(250, 250, 250, 0.25);
+}
+
+/* ---- Icon SVG dùng chung ---- */
+.icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.2em;
+}
+.icon-lg { width: 22px; height: 22px; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

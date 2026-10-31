@@ -1,1 +1,143 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f766e"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><title>Tiệm — Lịch hẹn & vận hành</title><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body><aside><a class="brand" href="index.html">t<span>i</span>ệm<span class="dot">.</span></a><small>KHÔNG GIAN QUẢN LÝ CỦA BẠN</small><button class="shop" id="settings">✧ &nbsp; Mộc Nail & Lash <span>⌄</span></button><nav><button data-view="overview">◫ <span>Tổng quan</span></button><button data-view="calendar" class="active">▦ <span>Lịch hẹn</span><b id="count"></b></button><button data-view="staff">♙ <span>Nhân viên & thu nhập</span></button><button data-view="customers">♧ <span>Khách hàng</span></button><button data-view="services">✧ <span>Dịch vụ</span></button><button data-view="reports">▥ <span>Báo cáo</span></button><button data-view="payments">▤ <span>Thanh toán</span></button><button id="openSettings">⚙ <span>Cài đặt</span></button></nav><div class="sidebottom"><button class="shop" id="workspace" style="width:100%;margin-bottom:12px">☁ Tài khoản & dữ liệu</button><div class="help">Một ngày làm việc nhẹ nhàng.<p>Mọi lịch hẹn, cùng một nơi.</p><span>✦</span></div><label>Giao diện <select id="theme"><option value="system">Theo thiết bị</option><option value="light">Sáng</option><option value="dark">Tối</option></select></label><div class="profile"><i>TR</i><div>Trâm Nguyễn<small>Chủ doanh nghiệp</small></div></div></div></aside><main><header><div><span class="crumb">Không gian làm việc / <strong id="breadcrumb">Lịch hẹn</strong></span></div><div style="display:flex;align-items:center;gap:10px"><button type="button" class="secondary" data-install style="font-size:10px">Cài trên máy tính ↗</button><a href="index.html" class="demo" style="text-decoration:none">TRANG CHỦ</a><button class="secondary mobile-account" onclick="document.querySelector('#workspace').click()" aria-label="Tài khoản và dữ liệu">☁</button></div></header><section class="heading"><div><div class="eyebrow">MỘC NAIL & LASH · CHI NHÁNH CHÍNH</div><h1 id="title">Một ngày thật suôn sẻ.</h1><p id="subtitle">Sắp xếp lịch gọn gàng, chăm sóc từng khách hàng.</p></div><button class="primary" id="new">＋ Đặt lịch mới</button></section><div id="content"></div><footer><span id="storageStatus">Dữ liệu trên thiết bị · Chưa kết nối ngân hàng / SMS</span></footer></main><dialog id="modal"><form id="form"><div class="dialoghead"><h2 id="modaltitle">Đặt lịch mới</h2><button type="button" id="close" aria-label="Đóng">✕</button></div><div id="fields"></div><p class="error" id="error" role="alert"></p><div id="actions"></div></form></dialog><script src="app.js"></script><script src="enhancements.js"></script><script src="install.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg">
+  <title>Tiệm — Lịch hẹn &amp; vận hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Bộ icon (Lucide, MIT) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-overview" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4M22 5h-4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4M2 7h20"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  </svg>
+
+  <aside>
+    <a class="brand" href="index.html" aria-label="Tiệm — về trang chủ">tiệm<span class="dot">.</span></a>
+    <small>Không gian quản lý của bạn</small>
+    <button class="shop" id="settings">Mộc Nail &amp; Lash</button>
+
+    <nav aria-label="Điều hướng chính">
+      <div class="nav-label">Vận hành</div>
+      <button data-view="overview"><svg class="icon"><use href="#i-overview"/></svg><span>Tổng quan</span></button>
+      <button data-view="calendar" class="active"><svg class="icon"><use href="#i-calendar"/></svg><span>Lịch hẹn</span><b id="count"></b></button>
+      <button class="nav-fab" id="navNew" type="button" aria-label="Đặt lịch mới"><svg class="icon icon-lg"><use href="#i-plus"/></svg></button>
+      <button data-view="customers"><svg class="icon"><use href="#i-heart"/></svg><span>Khách hàng</span></button>
+      <button data-view="payments" class="nav-secondary"><svg class="icon"><use href="#i-wallet"/></svg><span>Thanh toán</span></button>
+      <div class="nav-label">Quản trị</div>
+      <button data-view="staff" class="nav-secondary"><svg class="icon"><use href="#i-users"/></svg><span>Nhân viên &amp; thu nhập</span></button>
+      <button data-view="services" class="nav-secondary"><svg class="icon"><use href="#i-sparkles"/></svg><span>Dịch vụ</span></button>
+      <button data-view="reports" class="nav-secondary"><svg class="icon"><use href="#i-chart"/></svg><span>Báo cáo</span></button>
+      <button data-view="branches" class="nav-secondary"><svg class="icon"><use href="#i-store"/></svg><span>Chi nhánh</span></button><button data-view="team" class="nav-secondary"><svg class="icon"><use href="#i-users"/></svg><span>Quyền truy cập</span></button><button id="openSettings" class="nav-secondary"><svg class="icon"><use href="#i-settings"/></svg><span>Cài đặt</span></button>
+      <button class="nav-more" id="navMore" type="button" aria-haspopup="dialog" aria-controls="moreSheet"><svg class="icon"><use href="#i-grid"/></svg><span>Thêm</span></button>
+    </nav>
+
+    <div class="sidebottom">
+      <button class="shop" id="workspace">☁ Tài khoản &amp; dữ liệu</button>
+      <label>Giao diện
+        <select id="theme">
+          <option value="system">Theo thiết bị</option>
+          <option value="light">Sáng</option>
+          <option value="dark">Tối</option>
+        </select>
+      </label>
+      <div class="profile">
+        <i>TR</i>
+        <div>Trâm Nguyễn<small>Chủ doanh nghiệp</small></div>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <span class="crumb">Không gian làm việc <span aria-hidden="true">/</span> <strong id="breadcrumb">Lịch hẹn</strong></span>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="secondary small" data-install><svg class="icon"><use href="#i-download"/></svg><span>Cài trên máy tính</span></button>
+        <a href="index.html" class="demo"><svg class="icon"><use href="#i-home"/></svg><span>Trang chủ</span></a>
+        <button class="secondary small mobile-account" onclick="document.querySelector('#workspace').click()" aria-label="Tài khoản và dữ liệu"><svg class="icon"><use href="#i-cloud"/></svg></button>
+      </div>
+    </header>
+
+    <section class="heading">
+      <div>
+        <div class="eyebrow">Mộc Nail &amp; Lash · Chi nhánh chính</div>
+        <h1 id="title">Lịch hẹn</h1>
+        <p id="subtitle">Sắp xếp lịch gọn gàng, chăm sóc từng khách hàng.</p>
+      </div>
+      <button class="primary" id="new"><svg class="icon"><use href="#i-plus"/></svg>Đặt lịch mới</button>
+    </section>
+
+    <div id="content"></div>
+
+    <footer>
+      <span id="storageStatus">Dữ liệu trên thiết bị · Chưa kết nối ngân hàng / SMS</span>
+    </footer>
+  </main>
+
+  <!-- Sheet "Thêm" cho mobile -->
+  <div class="sheet-backdrop" id="moreBackdrop" hidden></div>
+  <div class="sheet" id="moreSheet" role="dialog" aria-modal="true" aria-label="Các mục khác" hidden>
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <strong>Các mục khác</strong>
+      <button type="button" class="icon-btn" id="moreClose" aria-label="Đóng"><svg class="icon"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="sheet-grid">
+      <button data-view="payments"><svg class="icon icon-lg"><use href="#i-wallet"/></svg><span>Thanh toán</span></button>
+      <button data-view="staff"><svg class="icon icon-lg"><use href="#i-users"/></svg><span>Nhân viên</span></button>
+      <button data-view="services"><svg class="icon icon-lg"><use href="#i-sparkles"/></svg><span>Dịch vụ</span></button>
+      <button data-view="reports"><svg class="icon icon-lg"><use href="#i-chart"/></svg><span>Báo cáo</span></button>
+      <button data-view="branches"><svg class="icon icon-lg"><use href="#i-store"/></svg><span>Chi nhánh</span></button><button data-view="team"><svg class="icon icon-lg"><use href="#i-users"/></svg><span>Quyền truy cập</span></button><button type="button" onclick="configureBookingPage()"><svg class="icon icon-lg"><use href="#i-calendar"/></svg><span>Trang đặt lịch</span></button><button type="button" data-sheet-action="settings"><svg class="icon icon-lg"><use href="#i-settings"/></svg><span>Cài đặt</span></button>
+      <button type="button" data-sheet-action="account"><svg class="icon icon-lg"><use href="#i-cloud"/></svg><span>Tài khoản</span></button>
+    </div>
+    <button type="button" class="sheet-theme" data-sheet-action="theme">
+      <svg class="icon icon-sun"><use href="#i-sun"/></svg><svg class="icon icon-moon"><use href="#i-moon"/></svg>
+      <span>Đổi giao diện sáng / tối</span>
+    </button>
+  </div>
+
+  <dialog id="modal">
+    <form id="form">
+      <div class="dialoghead">
+        <h2 id="modaltitle">Đặt lịch mới</h2>
+        <button type="button" id="close" class="icon-btn" aria-label="Đóng"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <div id="fields"></div>
+      <p class="error" id="error" role="alert"></p>
+      <div id="actions"></div>
+    </form>
+  </dialog>
+
+  <script src="app-bootstrap.js"></script>
+</body>
+</html>
