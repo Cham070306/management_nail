@@ -15,22 +15,38 @@
   window.tiemDemo = demo;
   window.tiemContext = context;
   window.workspaceApi = '/api/workspace' + (context ? '?workspace=' + encodeURIComponent(context) : '');
-  function login(message) {
-    loading.innerHTML = '<div><a href="index.html" class="auth-brand">tiệm.</a><h1>Không gian quản lý của bạn.</h1><p>' + esc(message) + '</p><a class="primary" target="_top" href="/signin-with-chatgpt?return_to=' + encodeURIComponent(location.pathname + location.search) + '">Đăng nhập bằng ChatGPT</a><a class="secondary" href="app.html?demo=1">Xem bản trải nghiệm</a><p><a href="index.html">Về trang giới thiệu</a></p></div>';
+  function login(message, retry) {
+    loading.innerHTML = '<div><a href="index.html" class="auth-brand">tiệm.</a><h1>Không gian quản lý của bạn.</h1><p>' + esc(message) + '</p>' +
+      (retry ? '<a class="primary" href="#" data-retry>Thử lại</a><a class="secondary" href="app.html?demo=1">Xem bản trải nghiệm</a>'
+             : '<a class="primary" target="_top" href="/signin-with-chatgpt?return_to=' + encodeURIComponent(location.pathname + location.search) + '">Đăng nhập bằng ChatGPT</a><a class="secondary" href="app.html?demo=1">Xem bản trải nghiệm</a>') +
+      '<p><a href="index.html">Về trang giới thiệu</a></p></div>';
+    const again = loading.querySelector('[data-retry]');
+    if (again) again.addEventListener('click', (event) => { event.preventDefault(); location.reload(); });
+  }
+  // Lỗi kỹ thuật chỉ ghi ra console; người dùng chỉ thấy câu dễ hiểu.
+  const friendly = (status) =>
+    status === 401 ? 'Đăng nhập để truy cập dữ liệu tiệm.'
+    : status === 403 ? 'Tài khoản này chưa được cấp quyền vào tiệm. Liên hệ chủ tiệm để được mời.'
+    : status === 404 && context ? 'Không tìm thấy không gian làm việc này. Kiểm tra lại đường dẫn.'
+    : 'Máy chủ đang tạm thời không phản hồi. Vui lòng thử lại sau ít phút.';
+  async function readJson(response) {
+    try { return await response.json(); } catch { return null; }
   }
   try {
     let initial = null;
     if (!demo) {
       const response = await fetch(window.workspaceApi, {cache:'no-store'});
-      initial = await response.json();
+      initial = await readJson(response);
       if (!response.ok) {
-        if (response.status === 403 && initial.employeeUrl) {
+        if (response.status === 403 && initial && initial.employeeUrl) {
           location.replace(initial.employeeUrl);
           return;
         }
-        login(initial.error || 'Đăng nhập để truy cập dữ liệu tiệm.');
+        const needsLogin = response.status === 401 || response.status === 403;
+        login((initial && initial.error) || friendly(response.status), !needsLogin);
         return;
       }
+      if (!initial || !initial.user) throw Error('Phản hồi không hợp lệ từ ' + window.workspaceApi);
     }
     const userId = demo ? 'demo' : initial.user.id;
     const suffix = ':user:' + userId + (context ? ':workspace:' + context : '');
@@ -72,6 +88,9 @@
       document.querySelector('main').prepend(note);
     }
   } catch (error) {
-    login(navigator.onLine ? 'Chưa mở được ứng dụng. ' + error.message : 'Cần kết nối Internet để xác thực tài khoản. Bạn vẫn có thể mở bản trải nghiệm.');
+    console.error('[Tiệm] Không khởi động được ứng dụng:', error);
+    login(navigator.onLine
+      ? 'Chưa mở được ứng dụng. Kết nối có thể đang chập chờn — bạn thử lại hoặc mở bản trải nghiệm nhé.'
+      : 'Thiết bị đang mất kết nối Internet. Kết nối lại rồi bấm Thử lại, hoặc mở bản trải nghiệm.', true);
   }
 })();
