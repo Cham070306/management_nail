@@ -1,0 +1,1 @@
+export function invoiceInContent(content:string,bookings:any[]){const normalized=content.toUpperCase();return bookings.filter(b=>new RegExp('(^|[^A-Z0-9])'+b.id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^A-Z0-9]|$)','i').test(normalized))}
