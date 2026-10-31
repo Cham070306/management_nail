@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {validState} from '../lib/workspace-validation.ts';
+const fixture=()=>({version:2,staff:['Lan'],profiles:[{start:'09:00',end:'19:00',commission:30,days:[1,2,3,4,5],skills:[0]}],services:[{name:'Sơn gel',price:300000,duration:60}],business:{name:'Mộc',type:'Nail / Mi'},customers:[],audit:[],bookings:[{id:'A1',name:'Khách mẫu',staff:0,service:0,serviceSnapshot:{name:'Sơn gel',price:250000,duration:60},date:'2026-10-31',time:'09:00',status:'done',paid:300000,tip:50000,tipStaff:0,commissionRate:30,transactions:[{id:'T1',amount:100000,method:'cash',date:'2026-10-31',at:'2026-10-31T02:00:00Z',by:'Thu ngân',kind:'receipt'},{id:'T2',amount:200000,method:'bank',date:'2026-10-31',at:'2026-10-31T02:01:00Z',by:'Thu ngân',kind:'receipt'}]}]});
+test('accepts mixed tender and historical service price',()=>assert.equal(validState(fixture()),true));
+test('rejects tampered amount inconsistent with ledger',()=>{const s=fixture();s.bookings[0].paid=400000;assert.equal(validState(s),false)});
+test('rejects tip larger than actual surplus',()=>{const s=fixture();s.bookings[0].tip=60000;assert.equal(validState(s),false)});
+test('rejects nonexistent employee and duplicate booking ids',()=>{const s=fixture();s.bookings[0].staff=3;assert.equal(validState(s),false);const t=fixture();t.bookings.push({...t.bookings[0]});assert.equal(validState(t),false)});
+test('rejects duplicate transactions',()=>{const s=fixture();s.bookings[0].transactions[1].id='T1';assert.equal(validState(s),false)});
+test('rejects refund before received funds',()=>{const s=fixture();s.bookings[0].transactions.unshift({id:'T0',amount:-100000,method:'cash',date:'2026-10-31',at:'2026-10-31T01:00:00Z',by:'Thu ngân',kind:'refund'});s.bookings[0].paid=200000;s.bookings[0].tip=0;assert.equal(validState(s),false)});
+test('accepts correct refund and adjusted tip',()=>{const s=fixture();s.bookings[0].transactions.push({id:'T3',amount:-30000,method:'cash',date:'2026-10-31',at:'2026-10-31T03:00:00Z',by:'Thu ngân',kind:'refund'});s.bookings[0].paid=270000;s.bookings[0].tip=20000;assert.equal(validState(s),true)});
